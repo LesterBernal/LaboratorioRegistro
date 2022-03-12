@@ -5,8 +5,8 @@ public class Sistema
     {
         List<Persona> ListaGeneral = new List<Persona>();
 
-        Alumno alumno = new Alumno(Guid.NewGuid().ToString(), "Payeras", "Bernardino", "payeras@gmail.com", "2022-001", 100);
-        Alumno alumno2 = new Alumno(Guid.NewGuid().ToString(), "Medina", "Daniel", "dmedina@gmail.com", "2022-002", 90);
+        Alumno alumno = new Alumno(Guid.NewGuid().ToString(), "Bernal", "Lester", "bernalpineda@gmail.com", "2022-002", 100);
+        Alumno alumno2 = new Alumno(Guid.NewGuid().ToString(), "SoSa", "Mynor", "sosa@gmail.com", "2022-002", 90);
         Profesor profesor = new Profesor(Guid.NewGuid().ToString(), "Tumax", "Edwin", "tumax@gmail.com", "2549 78885 0101", "Profesor Programacion");
         Profesor profesor2 = new Profesor(Guid.NewGuid().ToString(), "Giron", "Gerardo", "giron@gmail.com", "5454 87268 0101", "Profesor de Matematicas");
 
