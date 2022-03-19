@@ -1,80 +1,60 @@
 ﻿using LaboratorioRegistro.Edu.Kinal.Lab.Entities;
-public class Sistema
+﻿using LaboratorioRegistro.Edu.Kinal.Lab.Interfaces;
+public class Program
 {
+    private static List<Persona> ListaGeneral = new List<Persona>();
     public static void Main(string[] args)
     {
-        List<Persona> ListaGeneral = new List<Persona>();
 
-        Alumno alumno = new Alumno(Guid.NewGuid().ToString(), "Bernal", "Lester", "bernalpineda@gmail.com", "2022-002", 100);
-        Alumno alumno2 = new Alumno(Guid.NewGuid().ToString(), "SoSa", "Mynor", "sosa@gmail.com", "2022-002", 90);
-        Profesor profesor = new Profesor(Guid.NewGuid().ToString(), "Tumax", "Edwin", "tumax@gmail.com", "2549 78885 0101", "Profesor Programacion");
-        Profesor profesor2 = new Profesor(Guid.NewGuid().ToString(), "Giron", "Gerardo", "giron@gmail.com", "5454 87268 0101", "Profesor de Matematicas");
+        Alumno JuanPerez = new Alumno("123","Perez Alvarez","Juan Alberto","jperez@kalum.edu.gt","2022001",30);
+        Profesor EdwinTumax = new Profesor("767","Mancilla Paz","Raul Antonio","rmancilla@kalum.edu.gt","2489392620102","Instructor de informática");
 
-        ListaGeneral.Add(alumno);
-        ListaGeneral.Add(alumno2);
-        ListaGeneral.Add(profesor);
-        ListaGeneral.Add(profesor2);
-
-        OperarRegistro(ListaGeneral);
-        RegistarAsistencia(ListaGeneral);
-        VerMisDatos(ListaGeneral);
-        QuitarAsignatura(ListaGeneral);
+        Console.WriteLine("Procesando registro de datos");
+        OperarRegistro(JuanPerez);
+        OperarRegistro(EdwinTumax);
+        Console.WriteLine("Registrar asistencia");
+        RegistrarAsistencia(JuanPerez);
+        RegistrarAsistencia(EdwinTumax);
+        Console.WriteLine("Mostrando datos");
+        VerMisDatos(JuanPerez);
+        VerMisDatos(EdwinTumax);
+        Console.WriteLine("Eliminando asignaturas");
+        QuitarAsignatura(JuanPerez,"Matematica");
+        QuitarAsignatura(EdwinTumax,"Informática");
 
     }
-    static void OperarRegistro(List<Persona> elemento)
+
+    public static void VerMisDatos(Persona elemento)
     {
-        Console.WriteLine($"REGISTRO GENERAL");
-        foreach (Persona persona in elemento)
+        if(elemento is Alumno)
         {
-            if (persona is Alumno)
-            {
-                Console.WriteLine($"Registro de alumno: {persona.Nombres} {persona.Apellidos} con carné: {((Alumno)persona).Carne}");
-            }
-            else if (persona is Profesor)
-            {
-                Console.WriteLine($"Registro de Profesor: {persona.Nombres} {persona.Apellidos} con cargo: {((Profesor)persona).Cargo}");
-            }
-        }
-    }
-    static void RegistarAsistencia(List<Persona> elemento)
-    {
-        Console.WriteLine($"RRGISTRO DE ASISTENCIA");
-        foreach (Persona persona in elemento)
+            Alumno auxiliar = (Alumno)elemento;
+            auxiliar.ListarMisDatos(auxiliar.Carne);
+        }else if(elemento is Profesor)
         {
-            persona.TomarAsistencia();
+            Profesor auxiliar = (Profesor)elemento;
+            auxiliar.ListarMisDatos(auxiliar.Cui);
         }
     }
 
-    static void VerMisDatos(List<Persona> elemento)
+    public static void RegistrarAsistencia(Persona elemento)
     {
-        Console.WriteLine($"DATOS PERSONALES");
-        foreach (Persona persona in elemento)
+        foreach(Persona registro in ListaGeneral)
         {
-            if (persona is Alumno)
+            if(registro.Uuid == elemento.Uuid)
             {
-                ((Alumno)persona).ListarMisDatos(((Alumno)persona).Carne);
-            }
-            else if (persona is Profesor)
-            {
-                ((Profesor)persona).ListarMisDatos(((Profesor)persona).CUI);
-            }
-        }
-    }
-    static void QuitarAsignatura(List<Persona> elemento)
-    {
-        Console.WriteLine($"QUITAR ASIGNATURA");
-        foreach (Persona persona in elemento)
-        {
-            if (persona is Alumno)
-            {
-                ((Alumno)persona).EliminarAsignatura(((Alumno)persona).Carne);
-            }
-            else if (persona is Profesor)
-            {
-                ((Profesor)persona).EliminarAsignatura(((Profesor)persona).CUI);
+                elemento.TomarAsistencia();                
             }
         }
     }
 
+    public static void QuitarAsignatura(Persona elemento, string asignatura)
+    {
+        ((IOperaciones)elemento).EliminarAsignatura(asignatura);
+    }
 
+    public static void OperarRegistro(Persona elemento)
+    {
+        ListaGeneral.Add(elemento);
+    }
 }
