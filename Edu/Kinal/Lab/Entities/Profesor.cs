@@ -4,33 +4,35 @@ namespace LaboratorioRegistro.Edu.Kinal.Lab.Entities
 {
     public class Profesor : Persona, IOperaciones
     {
-        public string CUI { get; set; }
-        public string Cargo { get; set; }
+        public string Cui {get;set;}
+        public string Cargo {get;set;}
 
-        public override void TomarAsistencia()
+        public Profesor() : base()
         {
-            Console.WriteLine($"Asistencia Profesor: {this.Apellidos} {this.Nombres} con cargo: {this.Cargo}"); ;
+            
         }
 
-        public void ListarMisDatos(string identificador)
+        public Profesor(string uuid, string apellidos, string nombres, string email, string cui, string cargo)
+            : base(uuid, apellidos, nombres, email)
         {
-            Console.WriteLine($"Datos Generales del profesor: UUID: {this.UUID}, Apellidos: {this.Apellidos}, Nombres: {this.Nombres}, Cargo: {this.Cargo}");
+            this.Cui = cui;
+            this.Cargo = cargo;
         }
 
         public bool EliminarAsignatura(string asignatura)
         {
-            Console.WriteLine($"Se ha eliminado la asignatura del profesor {this.Apellidos} {this.Nombres}");
+            Console.WriteLine($"Se ha elminado la asignatura {this.Apellidos} {this.Nombres}");
             return true;
         }
 
-        public Profesor()
+        public void ListarMisDatos(string identificador)
         {
+            Console.WriteLine($"{this.Uuid} {this.Apellidos} {this.Nombres} {this.Cargo}");
         }
-        public Profesor(string uuid, string apellidos, string nombres, string email, string CUI, string Cargo)
-        : base(uuid, apellidos, nombres, email)
+
+        public override void TomarAsistencia()
         {
-            this.CUI = CUI;
-            this.Cargo = Cargo;
+            Console.WriteLine($"Tomando Asistencia de {this.Apellidos} {this.Nombres}");
         }
     }
 }
